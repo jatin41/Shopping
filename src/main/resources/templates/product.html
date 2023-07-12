@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Products</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      background: linear-gradient(to bottom, rgb(117, 249, 249), rgb(163, 118, 246));
+      margin: 0;
+      padding: 0;
+    }
+
+    .product-box {
+      padding: 20px;
+      background-color: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .product-box:hover {
+      transform: translateY(-5px);
+    }
+
+    .product-name {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .product-info {
+      margin-top: 10px;
+      color: #6c757d;
+    }
+
+    .product-price {
+      font-size: 16px;
+      font-weight: bold;
+      color: #dc3545;
+    }
+
+    .product-image {
+      width: 100%;
+      height: auto;
+      margin-top: 10px;
+      border-radius: 4px;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .container {
+      margin-top: 40px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #fff;
+      margin-bottom: 40px;
+      font-size: 36px;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+      border-color: #0056b3;
+    }
+
+    .btn-danger {
+      background-color: #dc3545;
+      border-color: #dc3545;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-danger:hover {
+      background-color: #a71d2a;
+      border-color: #a71d2a;
+    }
+
+    .navbar {
+      background: black;
+    }
+
+    .navbar-brand {
+      margin-left: 15px;
+    }
+
+    .navbar-nav.ml-auto .nav-link {
+      margin-right: 15px;
+      color: #fff;
+    }
+
+    /* New animation styles */
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .fade-in {
+      animation: fade-in 1s ease-in-out;
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark">
+  <!-- Brand -->
+  <a class="navbar-brand" href="#">Products</a>
+
+  <!-- Toggler/collapsible Button -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- Navbar links -->
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/welcome}">Home</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/cart}">cart</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/logout">Logout</a>
+      </li>
+    </ul>
+  </div> 
+</nav>
+<div class="container mt-4 fade-in">
+  <div class="row">
+    <h1>Products</h1>
+  </div>
+  <div class="row">
+    <div class="col-lg-3">
+<!--      <a th:href="@{/welcome}" class="btn btn-primary btn-sm mb-3">Add</a>-->
+    </div>
+  </div>
+  <div class="row">
+    <div th:each="product : ${products}" class="col-lg-4">
+      <div class="product-box">
+        <h3 class="product-name" th:text="${product.name}"></h3>
+        <p class="product-info" th:text="${product.information}"></p>
+        <p class="product-price">Rs <span th:text="${product.price}"></span></p>
+        <!-- Assuming you want to display the image for the first product -->
+        <img class="product-image" th:src="@{'data:image/jpeg;base64,' + ${product.base64Image}}" alt="Product Image"/>
+        <a th:href="@{/product/{id}(id=${product.id})}" class="btn btn-danger mt-3">Delete</a>
+        <a th:href="@{/product/my/{name}(name=${product.name})}" class="btn btn-primary mt-3">Add</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
